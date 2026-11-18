@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
-import { nav } from "@/lib/site";
+import { Instagram, Menu, X } from "lucide-react";
+import { nav, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 
@@ -68,9 +68,14 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link to="/iletisim" className="btn-signal hidden !py-3 !px-5 md:inline-flex">
-            Teklif Al <ArrowUpRight className="h-4 w-4" aria-hidden />
-          </Link>
+          <a
+            href={site.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-signal hidden !py-3 !px-5 md:inline-flex"
+          >
+            <Instagram className="h-4 w-4" aria-hidden /> {site.instagramHandle}
+          </a>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -112,9 +117,9 @@ export function Header() {
             ))}
           </ul>
         </nav>
-        <Link to="/iletisim" className="btn-signal justify-center">
-          Teklif Al <ArrowUpRight className="h-4 w-4" aria-hidden />
-        </Link>
+        <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer" className="btn-signal justify-center">
+          <Instagram className="h-4 w-4" aria-hidden /> Instagram'dan yazın
+        </a>
       </div>
     </header>
   );

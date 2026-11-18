@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
-import type { CSSProperties } from "react";
+import { ArrowDownRight, ArrowUpRight, Instagram } from "lucide-react";
+import { useState, type CSSProperties } from "react";
 import { heroImage } from "@/lib/media";
 import { clientNames, projects, categoryLabel } from "@/lib/projects";
 import { services } from "@/lib/services";
 import { Reveal } from "@/components/site/Reveal";
-import { CtaBand } from "@/components/site/CtaBand";
+import { InstagramBadge } from "@/components/site/InstagramBadge";
+import { site } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,7 +40,7 @@ function HomePage() {
       <FeaturedWork />
       <ServicesIndex />
       <Process />
-      <CtaBand />
+      <InstagramWall />
     </>
   );
 }
@@ -54,18 +55,18 @@ function Hero() {
       <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
         <img
           src={heroImage}
-          alt=""
+          alt="Hadrian Hukuk ve Danışmanlık için çıtalı duvar üzerine altın tonlu kabartma logo"
           fetchPriority="high"
           decoding="async"
-          className="hero-blur-soft lg:hero-blur h-full w-full animate-slow-zoom object-cover object-[60%_30%]"
+          className="hero-blur-light h-full w-full animate-slow-zoom object-cover object-[50%_42%]"
         />
-        <div className="veil-hero absolute inset-0" />
+        <div className="veil-hero-open absolute inset-0" />
         <div className="veil-glow absolute inset-0 animate-glow" />
         <div className="veil-floor absolute inset-0" />
       </div>
 
-      <div className="mx-auto grid w-full max-w-[1400px] flex-1 items-end gap-12 px-5 pt-36 pb-16 md:px-10 lg:grid-cols-12 lg:items-center lg:pt-32 lg:pb-24">
-        <div className="lg:col-span-7">
+      <div className="mx-auto grid w-full max-w-[1400px] flex-1 items-end gap-10 px-5 pt-36 pb-12 md:px-10 lg:grid-cols-12 lg:pt-32 lg:pb-16">
+        <div className="lg:col-span-8">
           <div className="rise flex items-center gap-4" style={d(150)}>
             <span className="h-2 w-2 rounded-full bg-primary" />
             <span className="eyebrow text-foreground/80">Tabela & Reklam Atölyesi — Kepez, Antalya</span>
@@ -75,15 +76,32 @@ function Hero() {
             <span className="rise block" style={d(250)}>
               Markanızı
             </span>
-            <span className="rise block" style={d(400)}>
-              <span className="serif-accent text-brass text-[1.08em] font-normal">ışıkla</span>
+            <span className="rise relative inline-block" style={d(400)}>
+              <span className="serif-accent text-shimmer text-[1.08em] font-normal">ışıkla</span>
+              {/* Script swash borrowed from the FY logo */}
+              <svg
+                aria-hidden
+                viewBox="0 0 300 40"
+                preserveAspectRatio="none"
+                className="absolute -bottom-[0.08em] left-[-4%] h-[0.28em] w-[118%] text-brass"
+              >
+                <path
+                  d="M2 30 C 70 6, 160 4, 298 18"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  pathLength={1}
+                  className="stroke-draw"
+                />
+              </svg>
             </span>
             <span className="rise block" style={d(550)}>
               yazıyoruz<span className="text-primary">.</span>
             </span>
           </h1>
 
-          <p className="rise mt-8 max-w-lg text-base text-foreground/75 md:text-lg" style={d(750)}>
+          <p className="rise mt-8 max-w-lg text-base text-foreground/80 md:text-lg" style={d(750)}>
             Işıklı kutu harften cam giydirmeye; keşiften montaja kadar markanızın sokaktaki yüzünü
             tasarlıyor, üretiyor ve yerine takıyoruz.
           </p>
@@ -92,38 +110,23 @@ function Hero() {
             <Link to="/projeler" className="btn-signal">
               Projeleri keşfedin <ArrowUpRight className="h-4 w-4" aria-hidden />
             </Link>
-            <Link to="/iletisim" className="link-draw text-sm font-semibold tracking-wide uppercase">
-              Teklif alın
-            </Link>
+            <a
+              href={site.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-draw text-sm font-semibold tracking-wide uppercase"
+            >
+              <Instagram className="h-4 w-4" aria-hidden /> {site.instagramHandle}
+            </a>
           </div>
         </div>
 
-        {/* The same photograph, in sharp focus — framed like a gallery piece */}
-        <div className="hidden lg:col-span-5 lg:block">
-          <figure className="rise relative ml-auto w-[min(100%,420px)]" style={d(600)}>
-            <div className="relative animate-float">
-              <div className="frame-glow relative aspect-[3/4] overflow-hidden rounded-[2px]">
-                <img
-                  src={heroImage}
-                  alt="Hadrian Hukuk ve Danışmanlık için çıtalı duvar üzerine altın tonlu kabartma logo"
-                  width={1086}
-                  height={1448}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <span aria-hidden className="absolute -top-4 -left-4 h-16 w-16 border-t border-l border-brass/70" />
-              <span aria-hidden className="absolute -right-4 -bottom-4 h-16 w-16 border-r border-b border-brass/70" />
-            </div>
-            <figcaption className="mt-8 flex items-start justify-between gap-6">
-              <div>
-                <p className="eyebrow text-brass">Seçili iş</p>
-                <p className="font-wide mt-2 text-sm font-bold">Hadrian Hukuk & Danışmanlık</p>
-              </div>
-              <p className="max-w-[16ch] text-right text-xs text-muted-foreground">
-                Altın tonlu kabartma harf · İç mekan
-              </p>
-            </figcaption>
-          </figure>
+        <div className="rise flex items-end justify-between gap-6 lg:col-span-4 lg:flex-col lg:items-end" style={d(1050)}>
+          <InstagramBadge className="h-28 w-28 md:h-44 md:w-44" />
+          <p className="max-w-[18ch] text-right text-xs leading-relaxed text-foreground/60">
+            <span className="eyebrow block text-brass">Seçili iş</span>
+            Hadrian Hukuk & Danışmanlık — altın tonlu kabartma harf
+          </p>
         </div>
       </div>
 
@@ -280,6 +283,10 @@ function FeaturedWork() {
 }
 
 function ServicesIndex() {
+  // Desktop: a photo of the hovered service follows the cursor.
+  const [hover, setHover] = useState<number | null>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
   return (
     <section className="py-24 md:py-32">
       <div className="mx-auto grid max-w-[1400px] gap-16 px-5 md:px-10 lg:grid-cols-12">
@@ -294,30 +301,31 @@ function ServicesIndex() {
             </p>
           </div>
         </Reveal>
-        <ol className="border-t border-border lg:col-span-8">
+        <ol
+          className="relative border-t border-border lg:col-span-8"
+          onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}
+          onMouseLeave={() => setHover(null)}
+        >
           {services.map((s, i) => (
             <Reveal as="li" key={s.id} delay={i * 60} className="border-b border-border">
               <Link
                 to="/hizmetler"
                 hash={s.id}
-                className="group relative grid grid-cols-[3rem_1fr_auto] items-center gap-4 py-7 md:grid-cols-[4rem_1fr_9rem_auto] md:gap-8 md:py-9"
+                onMouseEnter={() => setHover(i)}
+                className="group relative grid grid-cols-[3rem_1fr_auto] items-center gap-4 py-7 md:grid-cols-[4rem_1fr_auto] md:gap-8 md:py-10"
               >
                 <span className="eyebrow text-muted-foreground transition-colors group-hover:text-primary">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span>
-                  <span className="font-wide block text-xl font-bold transition-transform duration-500 group-hover:translate-x-2 md:text-3xl">
+                  <span
+                    className={`font-wide block text-xl font-bold transition-all duration-500 group-hover:translate-x-3 md:text-4xl ${
+                      hover !== null && hover !== i ? "lg:opacity-30" : ""
+                    }`}
+                  >
                     {s.title}
                   </span>
                   <span className="mt-2 block text-sm text-muted-foreground">{s.short}</span>
-                </span>
-                <span className="hidden h-24 overflow-hidden rounded-sm md:block">
-                  <img
-                    src={s.image.thumb}
-                    alt=""
-                    loading="lazy"
-                    className="h-full w-full scale-110 object-cover opacity-0 grayscale transition-all duration-700 group-hover:scale-100 group-hover:opacity-100 group-hover:grayscale-0"
-                  />
                 </span>
                 <ArrowUpRight
                   className="h-5 w-5 text-muted-foreground transition-all duration-500 group-hover:rotate-45 group-hover:text-primary"
@@ -327,6 +335,100 @@ function ServicesIndex() {
             </Reveal>
           ))}
         </ol>
+      </div>
+
+      <div
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-40 hidden lg:block"
+        style={{ transform: `translate3d(${pos.x + 28}px, ${pos.y - 140}px, 0)` }}
+      >
+        <div
+          className={`lift h-[280px] w-[220px] overflow-hidden rounded-sm transition-all duration-500 ${
+            hover === null ? "scale-75 rotate-6 opacity-0" : "scale-100 -rotate-3 opacity-100"
+          }`}
+        >
+          {services.map((s, i) => (
+            <img
+              key={s.id}
+              src={s.image.thumb}
+              alt=""
+              loading="lazy"
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                hover === i ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InstagramWall() {
+  const picks = [
+    ["seda-isler", 0],
+    ["royal", 0],
+    ["cd-hair", 0],
+    ["mr-pala", 0],
+    ["baybars", 0],
+    ["hadrian", 1],
+  ] as const;
+  const tiles = picks.map(([slug, i]) => projects.find((p) => p.slug === slug)!.shots[i]!);
+
+  return (
+    <section className="relative overflow-hidden py-24 md:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-10">
+        <Reveal className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+          <div>
+            <p className="eyebrow text-primary">05 — Instagram</p>
+            <h2 className="mt-6">
+              <a
+                href={site.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-wide group inline-block text-[13vw] leading-[0.85] font-extrabold tracking-tighter md:text-[9vw]"
+              >
+                <span className="text-outline transition-colors duration-700 group-hover:text-primary">@fy</span>
+                <span className="serif-accent text-shimmer font-normal">reklam</span>
+              </a>
+            </h2>
+          </div>
+          <p className="max-w-xs text-muted-foreground">
+            Yeni işlerimizi ilk orada paylaşıyoruz. Sorularınız ve teklif talepleriniz için de bize
+            Instagram'dan mesaj atın.
+          </p>
+        </Reveal>
+
+        <ul className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-6 md:gap-4">
+          {tiles.map((t, i) => (
+            <Reveal as="li" key={t.src} delay={i * 70} className={i % 2 === 1 ? "md:translate-y-10" : ""}>
+              <a
+                href={site.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block aspect-square overflow-hidden rounded-sm bg-card"
+                aria-label="Instagram'da gör"
+              >
+                <img
+                  src={t.thumb}
+                  alt={t.alt}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-50"
+                />
+                <Instagram
+                  className="absolute top-1/2 left-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-50 opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100"
+                  aria-hidden
+                />
+              </a>
+            </Reveal>
+          ))}
+        </ul>
+
+        <Reveal className="mt-20 flex justify-center md:mt-24">
+          <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer" className="btn-signal">
+            <Instagram className="h-4 w-4" aria-hidden /> Instagram'dan yazın
+          </a>
+        </Reveal>
       </div>
     </section>
   );

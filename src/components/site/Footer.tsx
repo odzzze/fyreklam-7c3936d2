@@ -47,18 +47,14 @@ export function Footer() {
             <h2 className="eyebrow text-brass">İletişim</h2>
             <address className="mt-5 space-y-3 not-italic text-muted-foreground">
               <p>{site.address}</p>
-              {site.phoneHref ? (
-                <a href={`tel:${site.phoneHref}`} className="block hover:text-foreground">
-                  {site.phoneDisplay}
-                </a>
-              ) : (
-                <p>{site.phoneDisplay}</p>
-              )}
-              {site.email && (
-                <a href={`mailto:${site.email}`} className="block hover:text-foreground">
-                  {site.email}
-                </a>
-              )}
+              <a
+                href={site.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-foreground hover:text-primary"
+              >
+                Instagram · {site.instagramHandle}
+              </a>
             </address>
           </div>
         </div>

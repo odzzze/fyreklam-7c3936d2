@@ -1,27 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import { useState, type FormEvent } from "react";
-import { toast } from "sonner";
-import { site, whatsappLink } from "@/lib/site";
-import { services } from "@/lib/services";
+import { ArrowUpRight, Camera, Instagram, MapPin, Ruler, Sparkles } from "lucide-react";
+import { site } from "@/lib/site";
 import { shot } from "@/lib/media";
 import { PageIntro } from "@/components/site/PageIntro";
 import { Reveal } from "@/components/site/Reveal";
-import { cn } from "@/lib/utils";
+import { InstagramBadge } from "@/components/site/InstagramBadge";
 
 export const Route = createFileRoute("/iletisim")({
   head: () => ({
     meta: [
-      { title: "İletişim — Teklif ve Keşif Talebi | FY Reklam Kepez, Antalya" },
+      { title: "İletişim — Instagram'dan Bize Yazın | FY Reklam Kepez, Antalya" },
       {
         name: "description",
         content:
-          "FY Reklam ile iletişime geçin: tabela, kutu harf, cam giydirme ve baskı işleriniz için keşif ve teklif isteyin. Kepez, Antalya.",
+          "FY Reklam'a Instagram (@fyreklam) üzerinden ulaşın: tabela, kutu harf, cam giydirme ve baskı işleriniz için mesaj gönderin. Kepez, Antalya.",
       },
       { property: "og:title", content: "İletişim | FY Reklam" },
       {
         property: "og:description",
-        content: "Tabela projeniz için keşif ve teklif isteyin. Kepez, Antalya.",
+        content: "Tabela projeniz için Instagram'dan @fyreklam'a yazın. Kepez, Antalya.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -32,59 +29,13 @@ export const Route = createFileRoute("/iletisim")({
 
 const introBg = shot("mevlana-market-gece", 3 / 4, "");
 
-const fieldCls =
-  "w-full border-0 border-b border-input bg-transparent px-0 py-4 text-lg text-foreground placeholder:text-muted-foreground/60 focus:border-brass focus:outline-none focus:ring-0";
+const tips = [
+  { icon: Camera, t: "Cephenizin fotoğrafı", d: "Tabelanın takılacağı yeri karşıdan çekin." },
+  { icon: Ruler, t: "Yaklaşık ölçü", d: "Genişlik ve yükseklik, kabaca bile olsa yeterli." },
+  { icon: Sparkles, t: "Logonuz ve fikriniz", d: "Varsa logonuz, aklınızdaki stil ya da örnekler." },
+];
 
 function ContactPage() {
-  const [service, setService] = useState<string>("");
-
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const name = String(data.get("ad") ?? "").trim();
-    const phone = String(data.get("telefon") ?? "").trim();
-    const message = String(data.get("mesaj") ?? "").trim();
-    if (!name || !phone) {
-      toast.error("Lütfen adınızı ve telefon numaranızı yazın.");
-      return;
-    }
-    const text = [
-      `Merhaba FY Reklam, ben ${name}.`,
-      service ? `İlgilendiğim hizmet: ${service}.` : "",
-      message,
-      `Telefon: ${phone}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    const wa = whatsappLink(text);
-    if (wa) {
-      window.open(wa, "_blank", "noopener,noreferrer");
-      return;
-    }
-    if (site.email) {
-      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent("Teklif talebi")}&body=${encodeURIComponent(text)}`;
-      return;
-    }
-    toast("Mesajınız hazır", {
-      description: "İletişim bilgilerimiz çok yakında burada olacak. Lütfen kısa süre sonra tekrar deneyin.",
-    });
-  }
-
-  const wa = whatsappLink("Merhaba FY Reklam, tabela için bilgi almak istiyorum.");
-
-  const channels = [
-    {
-      icon: Phone,
-      label: "Telefon",
-      value: site.phoneDisplay,
-      href: site.phoneHref ? `tel:${site.phoneHref}` : null,
-    },
-    { icon: MessageCircle, label: "WhatsApp", value: wa ? "Mesaj gönderin" : site.phoneDisplay, href: wa },
-    { icon: Mail, label: "E-posta", value: site.email || "—", href: site.email ? `mailto:${site.email}` : null },
-    { icon: MapPin, label: "Adres", value: site.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery)}` },
-  ];
-
   return (
     <>
       <PageIntro
@@ -93,106 +44,87 @@ function ContactPage() {
         image={introBg.src}
         title={
           <>
-            Bir <span className="serif-accent text-brass">merhaba</span> yeter.
+            Bir <span className="serif-accent text-shimmer">mesaj</span> yeter.
           </>
         }
-        lead="Projenizi kısaca anlatın; keşif ve teklif için size dönelim."
+        lead="Bize Instagram'dan ulaşın. Projenizi kısaca anlatın, birlikte planlayalım."
       />
 
       <section className="pb-24 md:pb-32">
-        <div className="mx-auto grid max-w-[1400px] gap-16 px-5 md:px-10 lg:grid-cols-12">
-          <Reveal className="lg:col-span-5">
-            <ul className="divide-y divide-border border-y border-border">
-              {channels.map((c) => {
-                const inner = (
-                  <>
-                    <c.icon className="h-5 w-5 text-primary" aria-hidden />
-                    <span className="eyebrow w-24 shrink-0 text-muted-foreground">{c.label}</span>
-                    <span className="font-wide flex-1 text-base font-semibold md:text-lg">{c.value}</span>
-                    {c.href && (
-                      <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-primary" aria-hidden />
-                    )}
-                  </>
-                );
-                return (
-                  <li key={c.label}>
-                    {c.href ? (
-                      <a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="group flex items-center gap-5 py-6">
-                        {inner}
-                      </a>
-                    ) : (
-                      <div className="flex items-center gap-5 py-6">{inner}</div>
-                    )}
+        <div className="mx-auto max-w-[1400px] px-5 md:px-10">
+          <Reveal>
+            <a
+              href={site.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="grain group relative isolate grid items-center gap-10 overflow-hidden rounded-sm border border-border bg-card p-8 transition-colors duration-500 hover:border-primary md:grid-cols-12 md:p-14"
+            >
+              <span aria-hidden className="veil-glow absolute inset-0 -z-10 opacity-60 transition-opacity duration-700 group-hover:opacity-100" />
+              <span className="block md:col-span-8">
+                <p className="eyebrow flex items-center gap-3 text-brass">
+                  <Instagram className="h-4 w-4" aria-hidden /> Instagram
+                </p>
+                <p className="font-wide mt-6 text-[12vw] leading-[0.9] font-extrabold tracking-tighter md:text-[6.5vw]">
+                  @fy<span className="serif-accent font-normal text-brass">reklam</span>
+                </p>
+                <p className="mt-6 max-w-md text-muted-foreground">
+                  Teklif, soru ve randevu talepleriniz için bize Instagram'dan mesaj gönderin.
+                </p>
+                <span className="btn-signal mt-10">
+                  Mesaj gönder <ArrowUpRight className="h-4 w-4 transition-transform group-hover:rotate-45" aria-hidden />
+                </span>
+              </span>
+              <span className="hidden justify-self-end md:col-span-4 md:block">
+                <InstagramBadge decorative />
+              </span>
+            </a>
+          </Reveal>
+
+          <div className="mt-20 grid gap-16 lg:grid-cols-12">
+            <Reveal className="lg:col-span-5">
+              <p className="eyebrow text-primary">Mesajınıza ekleyin</p>
+              <h2 className="display-md mt-5">Hızlı teklif için üç şey.</h2>
+              <ol className="mt-10 space-y-8">
+                {tips.map((t, i) => (
+                  <li key={t.t} className="flex gap-5">
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-border text-primary">
+                      <t.icon className="h-5 w-5" aria-hidden />
+                    </span>
+                    <div>
+                      <p className="font-wide font-bold">
+                        <span className="mr-2 text-primary">0{i + 1}</span>
+                        {t.t}
+                      </p>
+                      <p className="mt-1 text-muted-foreground">{t.d}</p>
+                    </div>
                   </li>
-                );
-              })}
-            </ul>
+                ))}
+              </ol>
+            </Reveal>
 
-            <div className="mt-10 overflow-hidden rounded-sm border border-border">
-              <iframe
-                title="FY Reklam konumu — Kepez, Antalya"
-                src={`https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&output=embed`}
-                className="h-72 w-full grayscale invert-[0.9] hue-rotate-180"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </Reveal>
-
-          <Reveal delay={120} className="lg:col-span-6 lg:col-start-7">
-            <form onSubmit={onSubmit} className="space-y-10" noValidate>
-              <div>
-                <h2 className="display-md">Teklif formu</h2>
-                <p className="mt-3 text-muted-foreground">Birkaç bilgi yeterli, gerisini konuşarak netleştiririz.</p>
-              </div>
-
-              <fieldset>
-                <legend className="eyebrow text-muted-foreground">İlgilendiğiniz hizmet</legend>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {services.map((s) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      aria-pressed={service === s.title}
-                      onClick={() => setService((v) => (v === s.title ? "" : s.title))}
-                      className={cn(
-                        "rounded-full border px-4 py-2 text-sm transition-colors",
-                        service === s.title
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border text-muted-foreground hover:border-brass hover:text-foreground",
-                      )}
-                    >
-                      {s.title}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
-
-              <div className="grid gap-6 md:grid-cols-2">
-                <label className="block">
-                  <span className="eyebrow text-muted-foreground">Ad Soyad *</span>
-                  <input name="ad" required autoComplete="name" maxLength={80} className={fieldCls} placeholder="Adınız" />
-                </label>
-                <label className="block">
-                  <span className="eyebrow text-muted-foreground">Telefon *</span>
-                  <input name="telefon" required type="tel" autoComplete="tel" maxLength={20} className={fieldCls} placeholder="05XX XXX XX XX" />
-                </label>
-              </div>
-              <label className="block">
-                <span className="eyebrow text-muted-foreground">Mesajınız</span>
-                <textarea
-                  name="mesaj"
-                  rows={4}
-                  maxLength={1000}
-                  className={cn(fieldCls, "resize-none")}
-                  placeholder="Ölçü, konum, aklınızdaki fikir…"
+            <Reveal delay={120} className="lg:col-span-6 lg:col-start-7">
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 border-y border-border py-6"
+              >
+                <MapPin className="h-5 w-5 text-primary" aria-hidden />
+                <span className="eyebrow w-20 text-muted-foreground">Konum</span>
+                <span className="font-wide flex-1 text-lg font-semibold">{site.address}</span>
+                <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-primary" aria-hidden />
+              </a>
+              <div className="mt-8 overflow-hidden rounded-sm border border-border">
+                <iframe
+                  title="FY Reklam konumu — Kepez, Antalya"
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&output=embed`}
+                  className="h-80 w-full grayscale invert-[0.9] hue-rotate-180"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
                 />
-              </label>
-              <button type="submit" className="btn-signal">
-                Gönder <ArrowUpRight className="h-4 w-4" aria-hidden />
-              </button>
-            </form>
-          </Reveal>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
     </>

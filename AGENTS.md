@@ -31,7 +31,7 @@ use the editor.
 
 ## Project rules (FY Reklam site)
 
-- Business details (phone, WhatsApp, e-mail, address) live only in `src/lib/site.ts`; components read from there so real values change in one place.
+- Business details (Instagram link, address) live only in `src/lib/site.ts`; components read from there so real values change in one place.
 - Project and service photos are CDN asset pointers in `src/assets/img/` (full `name.webp` + grid `name-k.webp`), resolved by `src/lib/media.ts` via `shot(name, ratio, alt)`; never commit raw photos.
 - Portfolio data is in `src/lib/projects.ts` and services in `src/lib/services.ts`; pages render from these lists.
 - `sitemap.xml` and `robots.txt` are server routes that derive the origin from the request, so no domain is hardcoded.

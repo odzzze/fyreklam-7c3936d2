@@ -30,8 +30,7 @@ const localBusiness = {
     addressCountry: "TR",
   },
   areaServed: site.city,
-  ...(site.phoneHref ? { telephone: site.phoneHref } : {}),
-  ...(site.email ? { email: site.email } : {}),
+  sameAs: [site.instagramUrl],
 };
 
 function NotFoundComponent() {

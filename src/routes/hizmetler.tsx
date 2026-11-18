@@ -99,7 +99,7 @@ function ServicesPage() {
                   ))}
                 </ul>
                 <Link to="/iletisim" className="link-draw mt-10 text-sm font-semibold tracking-wide uppercase">
-                  Bu hizmet için teklif alın <ArrowUpRight className="h-4 w-4" aria-hidden />
+                  Bu hizmet için bize yazın <ArrowUpRight className="h-4 w-4" aria-hidden />
                 </Link>
               </Reveal>
             </article>
