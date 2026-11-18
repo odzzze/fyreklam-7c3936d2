@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HakkimizdaRouteImport } from './routes/hakkimizda'
+import { Route as HizmetlerRouteImport } from './routes/hizmetler'
+import { Route as IletisimRouteImport } from './routes/iletisim'
+import { Route as ProjelerRouteImport } from './routes/projeler'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HakkimizdaRoute = HakkimizdaRouteImport.update({
+  id: '/hakkimizda',
+  path: '/hakkimizda',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HizmetlerRoute = HizmetlerRouteImport.update({
+  id: '/hizmetler',
+  path: '/hizmetler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IletisimRoute = IletisimRouteImport.update({
+  id: '/iletisim',
+  path: '/iletisim',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjelerRoute = ProjelerRouteImport.update({
+  id: '/projeler',
+  path: '/projeler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/hakkimizda': typeof HakkimizdaRoute
+  '/hizmetler': typeof HizmetlerRoute
+  '/iletisim': typeof IletisimRoute
+  '/projeler': typeof ProjelerRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/hakkimizda': typeof HakkimizdaRoute
+  '/hizmetler': typeof HizmetlerRoute
+  '/iletisim': typeof IletisimRoute
+  '/projeler': typeof ProjelerRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/hakkimizda': typeof HakkimizdaRoute
+  '/hizmetler': typeof HizmetlerRoute
+  '/iletisim': typeof IletisimRoute
+  '/projeler': typeof ProjelerRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/hakkimizda'
+    | '/hizmetler'
+    | '/iletisim'
+    | '/projeler'
+    | '/robots.txt'
+    | '/sitemap.xml'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/hakkimizda'
+    | '/hizmetler'
+    | '/iletisim'
+    | '/projeler'
+    | '/robots.txt'
+    | '/sitemap.xml'
+  id:
+    | '__root__'
+    | '/'
+    | '/hakkimizda'
+    | '/hizmetler'
+    | '/iletisim'
+    | '/projeler'
+    | '/robots.txt'
+    | '/sitemap.xml'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HakkimizdaRoute: typeof HakkimizdaRoute
+  HizmetlerRoute: typeof HizmetlerRoute
+  IletisimRoute: typeof IletisimRoute
+  ProjelerRoute: typeof ProjelerRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hakkimizda': {
+      id: '/hakkimizda'
+      path: '/hakkimizda'
+      fullPath: '/hakkimizda'
+      preLoaderRoute: typeof HakkimizdaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hizmetler': {
+      id: '/hizmetler'
+      path: '/hizmetler'
+      fullPath: '/hizmetler'
+      preLoaderRoute: typeof HizmetlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iletisim': {
+      id: '/iletisim'
+      path: '/iletisim'
+      fullPath: '/iletisim'
+      preLoaderRoute: typeof IletisimRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projeler': {
+      id: '/projeler'
+      path: '/projeler'
+      fullPath: '/projeler'
+      preLoaderRoute: typeof ProjelerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HakkimizdaRoute: HakkimizdaRoute,
+  HizmetlerRoute: HizmetlerRoute,
+  IletisimRoute: IletisimRoute,
+  ProjelerRoute: ProjelerRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -12,22 +12,43 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { site } from "@/lib/site";
+import { Toaster } from "@/components/ui/sonner";
+
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: site.name,
+  description:
+    "Kepez, Antalya'da tabela ve reklam atölyesi: ışıklı kutu harf, cephe tabelası, cam giydirme, dijital baskı ve iç mekan logo uygulamaları.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: site.district,
+    addressRegion: site.city,
+    addressCountry: "TR",
+  },
+  areaServed: site.city,
+  ...(site.phoneHref ? { telephone: site.phoneHref } : {}),
+  ...(site.email ? { email: site.email } : {}),
+};
 
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">Sayfa bulunamadı</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          Aradığınız sayfa bulunamadı ya da taşınmış olabilir.
         </p>
         <div className="mt-6">
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Go home
+            Ana sayfaya dön
           </Link>
         </div>
       </div>
@@ -46,10 +67,10 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+          Sayfa yüklenemedi
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          Bir sorun oluştu. Sayfayı yenileyebilir ya da ana sayfaya dönebilirsiniz.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -59,13 +80,13 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
             }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Try again
+            Tekrar dene
           </button>
           <a
             href="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
-            Go home
+            Ana sayfaya dön
           </a>
         </div>
       </div>
@@ -81,22 +102,38 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "FY Reklam — Tabela & Reklam Atölyesi | Kepez, Antalya" },
+      {
+        name: "description",
+        content:
+          "FY Reklam: Kepez, Antalya'da ışıklı kutu harf, cephe tabelası, cam giydirme ve dijital baskı.",
+      },
+      { name: "author", content: "FY Reklam" },
+      { name: "theme-color", content: "#1c1a18" },
+      { property: "og:site_name", content: "FY Reklam" },
+      { property: "og:locale", content: "tr_TR" },
+      { property: "og:title", content: "FY Reklam — Tabela & Reklam Atölyesi" },
+      {
+        property: "og:description",
+        content: "Kepez, Antalya'da ışıklı kutu harf, cephe tabelası, cam giydirme ve dijital baskı.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300..700&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(localBusiness) }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -106,7 +143,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <head>
         <HeadContent />
       </head>
@@ -124,7 +161,12 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <Header />
+      <main id="icerik">
+        <Outlet />
+      </main>
+      <Footer />
+      <Toaster position="bottom-center" />
     </QueryClientProvider>
   );
 }
