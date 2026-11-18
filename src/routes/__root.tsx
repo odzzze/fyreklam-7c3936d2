@@ -25,6 +25,8 @@ const localBusiness = {
     "Kepez, Antalya'da tabela ve reklam atölyesi: ışıklı kutu harf, cephe tabelası, cam giydirme, dijital baskı ve iç mekan logo uygulamaları.",
   address: {
     "@type": "PostalAddress",
+    streetAddress: site.street,
+    postalCode: site.postalCode,
     addressLocality: site.district,
     addressRegion: site.city,
     addressCountry: "TR",

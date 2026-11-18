@@ -45,8 +45,10 @@ export function Footer() {
           </div>
           <div className="md:col-span-2">
             <h2 className="eyebrow text-brass">İletişim</h2>
-            <address className="mt-5 space-y-3 not-italic text-muted-foreground">
-              <p>{site.address}</p>
+            <address className="mt-5 space-y-2 not-italic text-muted-foreground">
+              {site.addressLines.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
               <a
                 href={site.instagramUrl}
                 target="_blank"

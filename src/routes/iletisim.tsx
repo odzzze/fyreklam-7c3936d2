@@ -109,14 +109,16 @@ function ContactPage() {
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 border-y border-border py-6"
               >
-                <MapPin className="h-5 w-5 text-primary" aria-hidden />
-                <span className="eyebrow w-20 text-muted-foreground">Konum</span>
-                <span className="font-wide flex-1 text-lg font-semibold">{site.address}</span>
-                <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-primary" aria-hidden />
+                <MapPin className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+                <span className="eyebrow w-20 shrink-0 text-muted-foreground">Adres</span>
+                <span className="font-wide flex-1 text-lg leading-snug font-semibold">
+                  {site.addressLines.join(", ")}
+                </span>
+                <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-primary" aria-hidden />
               </a>
               <div className="mt-8 overflow-hidden rounded-sm border border-border">
                 <iframe
-                  title="FY Reklam konumu — Kepez, Antalya"
+                  title="FY Reklam konumu — Göksu, Kepez, Antalya"
                   src={`https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&output=embed`}
                   className="h-80 w-full grayscale invert-[0.9] hue-rotate-180"
                   loading="lazy"

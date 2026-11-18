@@ -5,10 +5,17 @@ export const site = {
   tagline: "Tabela & Reklam Atölyesi",
   city: "Antalya",
   district: "Kepez",
+  street: "Göksu, 6857. Sk.",
+  postalCode: "07260",
+  country: "Türkiye",
   instagramUrl: "https://www.instagram.com/fyreklam/",
   instagramHandle: "@fyreklam",
-  address: "Kepez, Antalya",
-  mapQuery: "Kepez, Antalya",
+  // One-line form used in prose and meta descriptions.
+  address: "Göksu, 6857. Sk., 07260 Kepez/Antalya",
+  // Address split into lines for the footer / contact card.
+  addressLines: ["Göksu, 6857. Sk.", "07260 Kepez / Antalya", "Türkiye"] as const,
+  // Precise enough for a Google Maps pin on the right corner.
+  mapQuery: "Göksu, 6857. Sk, 07260 Kepez, Antalya, Turkey",
 } as const;
 
 export const nav = [
